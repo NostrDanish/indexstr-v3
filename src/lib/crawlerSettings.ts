@@ -16,8 +16,9 @@ export const crawlerSettingsSchema = z.object({
   wifiOnly: z.boolean().catch(false),
   chargingOnly: z.boolean().catch(false),
   respectRobots: z.boolean().catch(true),
-  /** Session bandwidth cap (MB), mapped to the core byte budget. */
-  maxBandwidthMB: z.number().positive().catch(250),
+  /** Session bandwidth cap (MB), mapped to the core byte budget.
+   *  0 = UNLIMITED (cap fully off — the node just runs). Default 250. */
+  maxBandwidthMB: z.number().min(0).catch(250),
   /** Sliding-window global fetch budget. */
   maxPagesPerHour: z.number().positive().catch(500),
   /** Link-follow depth for manual seeds. */

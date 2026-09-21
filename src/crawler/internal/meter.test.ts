@@ -135,6 +135,17 @@ describe('reserve-on-dispatch (P3 spike finding #7 — budget = hard ceiling)', 
     expect(m.pagesBudgetWaitMs(0, now)).toBe(0); // unlimited
   });
 
+  it('bytes budget: 0 or negative limit = unlimited (cap fully off)', () => {
+    const now = 9_000_000_000;
+    const m = new Meter(() => now);
+    m.recordFetch(500 * 1024 * 1024, now); // 500 MB this hour
+    // The app's "Unlimited" setting maps maxBandwidthMB 0 → maxBytesPerHour 0.
+    expect(m.bytesBudgetWaitMs(0, 16 * 1024, now)).toBe(0);
+    expect(m.bytesBudgetWaitMs(-1, 16 * 1024, now)).toBe(0);
+    // …while a real cap still blocks when blown.
+    expect(m.bytesBudgetWaitMs(1_000_000, 16 * 1024, now)).toBeGreaterThan(0);
+  });
+
   it('bytes/hour counts in-flight reservations toward the ceiling', () => {
     const now = 5_000_000_000;
     const m = new Meter(() => now);

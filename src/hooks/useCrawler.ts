@@ -172,6 +172,8 @@ export function useCrawler() {
 
       budgets: {
         maxPagesPerHour: s.maxPagesPerHour,
+        // 0 = cap fully off: core treats maxBytesPerHour <= 0 as unlimited
+        // (bytesBudgetWaitMs → 0, byte reservation → ∞).
         maxBytesPerHour: s.maxBandwidthMB * 1024 * 1024,
         maxPageSizeKB: s.maxPageSizeKB,
       },

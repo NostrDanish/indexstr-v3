@@ -692,7 +692,7 @@ export function CrawlerDashboard() {
                     <div>
                       <Label htmlFor="bandwidth-cap">Session Bandwidth Cap</Label>
                       <p className="text-xs text-muted-foreground">
-                        Crawling pauses after this much data per session
+                        Crawling pauses after this much data — or pick Unlimited and it just runs
                       </p>
                     </div>
                   </div>
@@ -708,6 +708,7 @@ export function CrawlerDashboard() {
                       <SelectItem value="100">100 MB</SelectItem>
                       <SelectItem value="250">250 MB</SelectItem>
                       <SelectItem value="1000">1 GB</SelectItem>
+                      <SelectItem value="0">Unlimited</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
